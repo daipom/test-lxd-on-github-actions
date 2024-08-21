@@ -1,0 +1,16 @@
+name: Yum based Linux
+on:
+  - push
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: canonical/setup-lxd@v0.1.1
+      - name: add lxc image
+        run: |
+          set -x
+          lxc remote ls -f compact
+          lxc remote remove images
+          lxc remote ls -f compact
+          lxc remote add images https://images.lxd.canonical.com --protocol=simplestreams
